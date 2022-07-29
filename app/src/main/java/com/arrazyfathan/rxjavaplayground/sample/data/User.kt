@@ -7,7 +7,18 @@ data class User(
     val id: Long,
     val name: String,
     val age: Int
-)
+) {
+
+    override fun toString(): String {
+        return """
+            {
+                id: $id,
+                name: $name,
+                age: $age
+            }
+        """.trimIndent()
+    }
+}
 
 val mUserList = mutableListOf(
     User(1, "demo1", 15),

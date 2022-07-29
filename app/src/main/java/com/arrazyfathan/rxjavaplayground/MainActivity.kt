@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.arrazyfathan.rxjavaplayground.databinding.ActivityMainBinding
-import com.arrazyfathan.rxjavaplayground.operators.lastOperator
+import com.arrazyfathan.rxjavaplayground.operators.*
+import com.arrazyfathan.rxjavaplayground.sample.data.UserProfile
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
@@ -118,9 +120,76 @@ class MainActivity : AppCompatActivity() {
                 }
             )*/
 
-        lastOperator()
+        /*lastOperator()
             .distinct {
                 it.age
+            }
+            .subscribe(
+                {
+                    Log.d(TAG, "onNext: $it ")
+                },
+                {
+                    Log.d(TAG, "onError: $it ")
+                },
+                {
+                    Log.d(TAG, "onComplete")
+                }
+            )*/
+
+        /*skipOperator()
+            // .skipLast(2)
+            // .skip(2)
+            .skip(1, TimeUnit.MICROSECONDS)
+            .subscribe(
+                {
+                    Log.d(TAG, "onNext: $it ")
+                },
+                {
+                    Log.d(TAG, "onError: $it ")
+                },
+                {
+                    Log.d(TAG, "onComplete")
+                }
+            )*/
+
+        /*bufferOperator()
+            .buffer(3)
+            .subscribe(
+                {
+                    Log.d(TAG, "onNext: $it ")
+                },
+                {
+                    Log.d(TAG, "onError: $it ")
+                },
+                {
+                    Log.d(TAG, "onComplete")
+                }
+            )*/
+
+        /*mapOperator()
+            .map { user ->
+                UserProfile(
+                    id = user.id,
+                    name = "Mr. ${user.name} S.pd",
+                    age = user.age,
+                    image = "cdn.myiamges.com/${user.id}.png"
+                )
+            }
+            .subscribe(
+                {
+                    Log.d(TAG, "onNext: $it ")
+                },
+                {
+                    Log.d(TAG, "onError: $it ")
+                },
+                {
+                    Log.d(TAG, "onComplete")
+                }
+            )*/
+
+        flatMapOperator()
+            .flatMap {
+                getUserProfile(it.id)
             }
             .subscribe(
                 {
