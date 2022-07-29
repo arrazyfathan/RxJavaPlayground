@@ -1,10 +1,4 @@
 package com.arrazyfathan.rxjavaplayground.sample
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.schedulers.Schedulers
-
-fun main() {
-
-
-}
+val listNumber = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14)
+val listNumber2 = listOf(10, 20, 30, 40, 50, 60, 70, 80)

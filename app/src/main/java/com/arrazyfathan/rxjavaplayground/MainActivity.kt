@@ -4,14 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.arrazyfathan.rxjavaplayground.databinding.ActivityMainBinding
-import com.arrazyfathan.rxjavaplayground.operators.fromIterableOperator
-import com.arrazyfathan.rxjavaplayground.operators.fromOperator
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Observer
-import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.schedulers.Schedulers
-import java.util.concurrent.TimeUnit
+import com.arrazyfathan.rxjavaplayground.operators.intervalOperator
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,6 +19,54 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        fromIterableOperator()
+        demoRxJava()
+    }
+
+    private fun demoRxJava() {
+        // justOperator()
+
+        // fromOperator()
+
+        // fromIterableOperator()
+
+        /*rangeOperator().subscribe(
+            {
+                Log.d(TAG, "onNext: $it")
+            },
+            {
+                Log.d(TAG, "onError: $it ")
+            },
+            {
+                Log.d(TAG, "onComplete")
+            }
+        )*/
+
+        /*repeatOperator().subscribe(
+            {
+                Log.d(TAG, "onNext: $it")
+            },
+            {
+                Log.d(TAG, "onError: $it ")
+            },
+            {
+                Log.d(TAG, "onComplete")
+            }
+        )*/
+
+        intervalOperator().subscribe(
+            {
+                getLocation()
+            },
+            {
+                Log.d(TAG, "onError: $it ")
+            },
+            {
+                Log.d(TAG, "onComplete")
+            }
+        )
+    }
+
+    private fun getLocation() {
+        Log.d(TAG, "Latitude: ${120}.${(100..900).random()}, Longitude: ${177}.${(100..900).random()}")
     }
 }
