@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.arrazyfathan.rxjavaplayground.databinding.ActivityMainBinding
+import com.arrazyfathan.rxjavaplayground.maybe.createMaybe
+import com.arrazyfathan.rxjavaplayground.maybe.observeMaybe
 import com.arrazyfathan.rxjavaplayground.operators.*
 
 class MainActivity : AppCompatActivity() {
@@ -297,7 +299,7 @@ class MainActivity : AppCompatActivity() {
 
             )*/
 
-        zipGetUserAndGetBlogs()
+        /*zipGetUserAndGetBlogs()
             .subscribe(
                 {
                     it.forEach { blogDetail ->
@@ -311,7 +313,13 @@ class MainActivity : AppCompatActivity() {
                     Log.d(TAG, "onComplete")
                 }
 
-            )
+            )*/
+
+        // createObservable().subscribe(observer())
+
+        // createSingleObservable().subscribe(observeSingle())
+
+        createMaybe().subscribe(observeMaybe())
     }
 
     private fun getLocation() {
