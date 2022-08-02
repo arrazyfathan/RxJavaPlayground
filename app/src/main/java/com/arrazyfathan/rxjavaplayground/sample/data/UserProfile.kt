@@ -8,19 +8,7 @@ data class UserProfile(
     val name: String,
     val age: Int,
     val image: String
-) {
-    override fun toString(): String {
-        return """
-            {
-                id: $id,
-                name: $name,
-                age: $age,
-                image: $image
-            }
-        """.trimIndent()
-    }
-}
-
+)
 
 val mUserProfileList = mutableListOf(
     UserProfile(1, "demo1", 15, "https://test/com/1"),

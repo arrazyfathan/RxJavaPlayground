@@ -5,8 +5,6 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.arrazyfathan.rxjavaplayground.databinding.ActivityMainBinding
 import com.arrazyfathan.rxjavaplayground.operators.*
-import com.arrazyfathan.rxjavaplayground.sample.data.UserProfile
-import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
@@ -187,10 +185,82 @@ class MainActivity : AppCompatActivity() {
                 }
             )*/
 
-        flatMapOperator()
+        /*flatMapOperator()
             .flatMap {
                 getUserProfile(it.id)
             }
+            .subscribe(
+                {
+                    Log.d(TAG, "onNext: $it ")
+                },
+                {
+                    Log.d(TAG, "onError: $it ")
+                },
+                {
+                    Log.d(TAG, "onComplete")
+                }
+            )*/
+
+        /*flatMapOperatorTwo()
+            .flatMap {
+                Observable.fromIterable(it)
+            }
+            .flatMap {
+                getUserProfile(it.id)
+            }
+            .subscribe(
+                {
+                    Log.d(TAG, "onNext: $it ")
+                },
+                {
+                    Log.d(TAG, "onError: $it ")
+                },
+                {
+                    Log.d(TAG, "onComplete")
+                }
+            )*/
+
+        /*groupByOperator()
+            .groupBy { user ->
+                user.age
+            }
+            .filter {
+                it.key == 65
+            }
+            .subscribe(
+                { group ->
+                    group.subscribe(
+                        {
+                            Log.d(TAG, "Key : ${group.key} values : $it ")
+                        },
+                        {
+                            Log.d(TAG, "onError: $it ")
+                        }
+                    )
+                    // Log.d(TAG, "onNext: $it ")
+                },
+                {
+                    Log.d(TAG, "onError: $it ")
+                },
+                {
+                    Log.d(TAG, "onComplete")
+                }
+            )*/
+
+        /*mergeOperator()
+            .subscribe(
+                {
+                    Log.d(TAG, "onNext: $it ")
+                },
+                {
+                    Log.d(TAG, "onError: $it ")
+                },
+                {
+                    Log.d(TAG, "onComplete")
+                }
+            )*/
+
+        concatOperator()
             .subscribe(
                 {
                     Log.d(TAG, "onNext: $it ")

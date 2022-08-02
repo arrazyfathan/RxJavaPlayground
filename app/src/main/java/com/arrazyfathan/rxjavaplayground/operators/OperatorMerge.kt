@@ -7,19 +7,17 @@ import com.arrazyfathan.rxjavaplayground.sample.data.mUserProfileList
 import io.reactivex.rxjava3.core.Observable
 
 /**
- * Created by Ar Razy Fathan Rabbani on 29/07/22.
+ * Created by Ar Razy Fathan Rabbani on 02/08/22.
  */
 
-fun flatMapOperator(): Observable<User> {
+fun getUser(): Observable<User> {
     return Observable.fromIterable(mUserList)
 }
 
-fun flatMapOperatorTwo(): Observable<List<User>> {
-    return Observable.just(mUserList)
+fun getProfile(): Observable<UserProfile> {
+    return Observable.fromIterable(mUserProfileList)
 }
 
-fun getUserProfile(id: Long): Observable<UserProfile> {
-    return Observable.fromIterable(mUserProfileList).filter {
-        it.id == id
-    }
+fun mergeOperator(): Observable<Any> {
+    return Observable.merge(getProfile(), getUser())
 }
