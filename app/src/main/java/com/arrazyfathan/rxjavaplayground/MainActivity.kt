@@ -260,7 +260,7 @@ class MainActivity : AppCompatActivity() {
                 }
             )*/
 
-        concatOperator()
+        /*concatOperator()
             .subscribe(
                 {
                     Log.d(TAG, "onNext: $it ")
@@ -271,6 +271,46 @@ class MainActivity : AppCompatActivity() {
                 {
                     Log.d(TAG, "onComplete")
                 }
+            )*/
+
+        /*startWithOperator()
+            .subscribe(
+                {
+                    Log.d(TAG, "onNext: $it ")
+                },
+                {
+                    Log.d(TAG, "onNext: $it ")
+                }
+            )*/
+
+        /*zipOperator()
+            .subscribe(
+                {
+                    Log.d(TAG, "onNext: $it ")
+                },
+                {
+                    Log.d(TAG, "onNext: $it ")
+                },
+                {
+                    Log.d(TAG, "onComplete")
+                }
+
+            )*/
+
+        zipGetUserAndGetBlogs()
+            .subscribe(
+                {
+                    it.forEach { blogDetail ->
+                        Log.d(TAG, "onNext: $blogDetail ")
+                    }
+                },
+                {
+                    Log.d(TAG, "onNext: $it ")
+                },
+                {
+                    Log.d(TAG, "onComplete")
+                }
+
             )
     }
 
