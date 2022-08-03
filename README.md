@@ -37,4 +37,14 @@ Flowable is similar to Observable but this comes into picture when observable is
 4. BackressureStrategy.MISSING : We may temporary pass this values if we don't want any backpressure strategy.
 5. BackpressureStrategy.ERROE : If we don't expect backpressure at all, we can pass BackpressureStrategy.ERROR 
 <br>
+
+## RxJava Schedulers
+
+Threading in RxJava is done with help of Schedulers. Shedulers can be thought of as a thread pool managing 1 or more threads. Whenever a Schedulers needs to execute a task, it will take a thread from its pool and run the task in that thread.
+<br>
+**Type Of Schedulers**
+<br>
+1. Schedulers.io() : is backed by an unbounded thread pool. It is used for non CPU-intensive I/O type work including interaction with the file system, performing network calls, database interaction, etc. This thread pool is intended to be used for asynchronously performing blocking IO.
+
+2. Schedulers.computation() : is backed by a bounded thread pool with size up to the number of available processors. It is used for computational or CPU-intensive work such as resizing images, processing large data sets, etc. Be careful: when you allocatte more computational threads than available cres, performance will gegrade due to context switching and thread creation overhead as threads view processors time.
 	

@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.arrazyfathan.rxjavaplayground.databinding.ActivityMainBinding
-import com.arrazyfathan.rxjavaplayground.flowable.createFlowable
-import com.arrazyfathan.rxjavaplayground.flowable.createFlowableTwo
+import com.arrazyfathan.rxjavaplayground.disposable.createObservableDisposable
+import com.arrazyfathan.rxjavaplayground.disposable.disposable
+import com.arrazyfathan.rxjavaplayground.disposable.observerDisposable
 import com.arrazyfathan.rxjavaplayground.operators.*
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
 class MainActivity : AppCompatActivity() {
@@ -18,6 +18,8 @@ class MainActivity : AppCompatActivity() {
     companion object {
         const val TAG = "MainActivity"
     }
+
+    val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -341,7 +343,7 @@ class MainActivity : AppCompatActivity() {
                 }
             )*/
 
-        createFlowableTwo()
+        /*createFlowableTwo()
             .toFlowable(BackpressureStrategy.LATEST)
             .observeOn(Schedulers.io(), false, 9)
             .subscribe(
@@ -354,7 +356,25 @@ class MainActivity : AppCompatActivity() {
                 {
                     Log.d(TAG, "onComplete")
                 }
-            )
+            )*/
+
+        /*compositeDisposable.add(
+            createObservableDisposable()
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                    {
+                        Log.d(TAG, "onNext: $it")
+                    },
+                    {
+                        Log.d(TAG, "onError: $it")
+                    },
+                    {
+                        Log.d(TAG, "onComplete")
+                    }
+                )
+        )*/
+
+        createObservableDisposable().subscribe(observerDisposable())
     }
 
     private fun getLocation() {
@@ -362,5 +382,19 @@ class MainActivity : AppCompatActivity() {
             TAG,
             "Latitude: ${120}.${(100..900).random()}, Longitude: ${177}.${(100..900).random()}"
         )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable.dispose()
+        compositeDisposable.clear()
+        Log.d(TAG, "onDestroy")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        disposable.dispose()
+        compositeDisposable.clear()
+        Log.d(TAG, "onDestroy")
     }
 }
