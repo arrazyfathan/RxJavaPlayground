@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.arrazyfathan.rxjavaplayground.databinding.ActivityMainBinding
-import com.arrazyfathan.rxjavaplayground.maybe.createMaybe
-import com.arrazyfathan.rxjavaplayground.maybe.observeMaybe
+import com.arrazyfathan.rxjavaplayground.flowable.createFlowable
+import com.arrazyfathan.rxjavaplayground.flowable.createFlowableTwo
 import com.arrazyfathan.rxjavaplayground.operators.*
+import io.reactivex.rxjava3.core.BackpressureStrategy
+import io.reactivex.rxjava3.core.Scheduler
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 class MainActivity : AppCompatActivity() {
 
@@ -319,7 +322,39 @@ class MainActivity : AppCompatActivity() {
 
         // createSingleObservable().subscribe(observeSingle())
 
-        createMaybe().subscribe(observeMaybe())
+        // createMaybe().subscribe(observeMaybe())
+
+        // createCompletableObservable().subscribe(observerCompletable())
+
+        /*createFlowable()
+            .onBackpressureLatest()
+            .observeOn(Schedulers.io(), false, 10)
+            .subscribe(
+                {
+                    Log.d(TAG, "onNext: $it")
+                },
+                {
+                    Log.d(TAG, "onError: $it")
+                },
+                {
+                    Log.d(TAG, "onComplete")
+                }
+            )*/
+
+        createFlowableTwo()
+            .toFlowable(BackpressureStrategy.LATEST)
+            .observeOn(Schedulers.io(), false, 9)
+            .subscribe(
+                {
+                    Log.d(TAG, "onNext: $it")
+                },
+                {
+                    Log.d(TAG, "onError: $it")
+                },
+                {
+                    Log.d(TAG, "onComplete")
+                }
+            )
     }
 
     private fun getLocation() {
