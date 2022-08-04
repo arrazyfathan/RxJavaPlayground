@@ -47,4 +47,20 @@ Threading in RxJava is done with help of Schedulers. Shedulers can be thought of
 1. Schedulers.io() : is backed by an unbounded thread pool. It is used for non CPU-intensive I/O type work including interaction with the file system, performing network calls, database interaction, etc. This thread pool is intended to be used for asynchronously performing blocking IO.
 
 2. Schedulers.computation() : is backed by a bounded thread pool with size up to the number of available processors. It is used for computational or CPU-intensive work such as resizing images, processing large data sets, etc. Be careful: when you allocatte more computational threads than available cres, performance will gegrade due to context switching and thread creation overhead as threads view processors time.
-	
+
+3. Schedulers.newThread() : Create a new thread for each unit of work scheduled. This scheduler is expensive as new thead is spawned every time and no reuse happens.
+
+4. Schedulers.from(Executor executor) : creates ad returns a custom scheduler backed by the specified exceutor. To limit the number of simultaneous threads in the thread pool, use scheduler.from(Executors.newFixedThreadPool(n)). This guarantees that if a task is scheduled when all threads are occupied, it will be queued. The threads in the pool will exist until it is explicitly shutdown.
+
+5. Main thread or AndroidShedulers.mainThread() : is provided by the RxAndroid extension lib to RxJava. Main threads (also known as UI thread) is where user interaction happens. Care should be taken not overload this thread to prevent janky non-responsive UI or worse Application Not Responding ANR dialog.
+
+6. Schedulers.single() : This schedulers is backed by a single thread executing tasks sequentially in the order requested.
+
+## Default Threading in RxJava
+If you don't specify threading in RxJava (if you don't specify subscribeOn, observeOn or both) the data will be emitted and processed by the current scheduler/thread (usually the main thread). Some operators such as inteval operator operate on a computational thread by default.
+<br>
+We can specify a thread to execute any operator by using subscribeOn and/or observeOn.
+- subscribeOn affect upstream operators (operator above the subscribeOn)
+- observeOn affects downstream operators (operators below the observeOn)
+- If only subscribeOn is specified all operators will be executed on that thread
+- If only observeOn is specified, all operators will be executed on the current thread and only operators below the observeOn will be switched to thread specified by the observeOn.

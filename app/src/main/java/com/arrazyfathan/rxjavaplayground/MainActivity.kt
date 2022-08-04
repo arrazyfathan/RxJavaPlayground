@@ -8,6 +8,9 @@ import com.arrazyfathan.rxjavaplayground.disposable.createObservableDisposable
 import com.arrazyfathan.rxjavaplayground.disposable.disposable
 import com.arrazyfathan.rxjavaplayground.disposable.observerDisposable
 import com.arrazyfathan.rxjavaplayground.operators.*
+import com.arrazyfathan.rxjavaplayground.sample.data.mUserList
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
@@ -19,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         const val TAG = "MainActivity"
     }
 
-    val compositeDisposable = CompositeDisposable()
+    private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -374,7 +377,29 @@ class MainActivity : AppCompatActivity() {
                 )
         )*/
 
-        createObservableDisposable().subscribe(observerDisposable())
+        // createObservableDisposable().subscribe(observerDisposable())
+
+        compositeDisposable.add(
+            Observable.just(mUserList)
+                .flatMap {
+                    Log.d(TAG, "Upstream Thread: ${Thread.currentThread().name}")
+                    Observable.fromIterable(it)
+                }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        binding.number.text = it.toString()
+                        Log.d(TAG, "onNext: $it Downstream Thread: ${Thread.currentThread().name}")
+                    },
+                    {
+                        Log.d(TAG, "onError: $it")
+                    },
+                    {
+                        Log.d(TAG, "onComplete")
+                    }
+                )
+        )
     }
 
     private fun getLocation() {
@@ -385,16 +410,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
-        disposable.dispose()
+        // disposable.dispose()
         compositeDisposable.clear()
         Log.d(TAG, "onDestroy")
+        super.onDestroy()
     }
 
     override fun onStop() {
-        super.onStop()
-        disposable.dispose()
+        // disposable.dispose()
         compositeDisposable.clear()
         Log.d(TAG, "onDestroy")
+        super.onStop()
     }
 }

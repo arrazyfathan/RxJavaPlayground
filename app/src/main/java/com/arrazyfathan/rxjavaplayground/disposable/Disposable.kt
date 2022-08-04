@@ -20,8 +20,9 @@ fun createObservableDisposable(): Observable<Int> {
                 for (i in 1..100000) {
                     emitter.onNext(i)
                 }
-
                 emitter.onComplete()
+            } else {
+                emitter.isDisposed
             }
         } catch (e: Exception) {
             emitter.onError(e)
@@ -32,9 +33,7 @@ fun createObservableDisposable(): Observable<Int> {
 fun observerDisposable(): Observer<Int> {
     return object : Observer<Int> {
         override fun onSubscribe(d: Disposable) {
-            d.let {
-                disposable = d
-            }
+            disposable = d
             Log.d(MainActivity.TAG, "onSubscribe")
         }
 
