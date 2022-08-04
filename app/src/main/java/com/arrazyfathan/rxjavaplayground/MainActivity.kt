@@ -3,16 +3,12 @@ package com.arrazyfathan.rxjavaplayground
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.arrazyfathan.rxjavaplayground.cold.coldObservable
+import com.arrazyfathan.rxjavaplayground.cold.coldObserver
 import com.arrazyfathan.rxjavaplayground.databinding.ActivityMainBinding
-import com.arrazyfathan.rxjavaplayground.disposable.createObservableDisposable
-import com.arrazyfathan.rxjavaplayground.disposable.disposable
-import com.arrazyfathan.rxjavaplayground.disposable.observerDisposable
+import com.arrazyfathan.rxjavaplayground.hot.hotObservable
 import com.arrazyfathan.rxjavaplayground.operators.*
-import com.arrazyfathan.rxjavaplayground.sample.data.mUserList
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
 
 class MainActivity : AppCompatActivity() {
 
@@ -379,7 +375,7 @@ class MainActivity : AppCompatActivity() {
 
         // createObservableDisposable().subscribe(observerDisposable())
 
-        compositeDisposable.add(
+        /*compositeDisposable.add(
             Observable.just(mUserList)
                 .flatMap {
                     Log.d(TAG, "Upstream Thread: ${Thread.currentThread().name}")
@@ -399,7 +395,26 @@ class MainActivity : AppCompatActivity() {
                         Log.d(TAG, "onComplete")
                     }
                 )
+        )*/
+
+        // Cold Observable
+        /*coldObservable()
+            .subscribe(coldObserver())*/
+
+        // Hot Observable
+        /*val hotObservable = hotObservable()
+        hotObservable.subscribe(
+            {
+                Log.d(TAG, "onNext: $it")
+            },
+            {
+                Log.d(TAG, "onError: $it")
+            },
+            {
+                Log.d(TAG, "onComplete")
+            }
         )
+        hotObservable.connect()*/
     }
 
     private fun getLocation() {

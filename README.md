@@ -64,3 +64,16 @@ We can specify a thread to execute any operator by using subscribeOn and/or obse
 - observeOn affects downstream operators (operators below the observeOn)
 - If only subscribeOn is specified all operators will be executed on that thread
 - If only observeOn is specified, all operators will be executed on the current thread and only operators below the observeOn will be switched to thread specified by the observeOn.
+
+## Cold Observables
+Cold observables are sequences that only emits item upon subscription. Each observer will have its own set of items emitted to them and depending on how the observable was created, will have different instance of emitted items.
+<br>
+In reality, data-driven observables are most likely cold. Multiple Observers receive the same datasets by getting separate streams of each item. For those familiar, some real-world examples of cold observables are retrofit and room queries.
+
+## Hot Obsevables
+In contrast to cold observable, hot observable emit items regardless whether there are observers. In a hot observable, there is a single source of emission and depending on when observer subscribe, they may miss some of those emission.
+<br> 
+Hot Observables often represent events rather finite datasets. The events can carry data with them, but there is a time-sensitive component where late observers can miss previously emitted data. UI events or server request for example can be represented as hot Observable.
+<br>
+There are many way to implement hot observables. One of them is Subjects.
+
