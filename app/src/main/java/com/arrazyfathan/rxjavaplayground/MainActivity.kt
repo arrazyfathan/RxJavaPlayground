@@ -3,11 +3,9 @@ package com.arrazyfathan.rxjavaplayground
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.arrazyfathan.rxjavaplayground.cold.coldObservable
-import com.arrazyfathan.rxjavaplayground.cold.coldObserver
 import com.arrazyfathan.rxjavaplayground.databinding.ActivityMainBinding
-import com.arrazyfathan.rxjavaplayground.hot.hotObservable
 import com.arrazyfathan.rxjavaplayground.operators.*
+import com.arrazyfathan.rxjavaplayground.subject.*
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 class MainActivity : AppCompatActivity() {
@@ -415,6 +413,29 @@ class MainActivity : AppCompatActivity() {
             }
         )
         hotObservable.connect()*/
+
+        /*val hotObservableTwo = hotObservableTwo()
+        hotObservableTwo.connect()
+
+        hotObservableTwo.subscribe(
+            {
+                Log.d(TAG, "onNext: $it")
+            },
+            {
+                Log.d(TAG, "onError: $it")
+            },
+            {
+                Log.d(TAG, "onComplete")
+            }
+        )*/
+
+        // asyncSubject()
+        // behaviorSubject()
+        // behaviorSubjectTwo()
+        // publishSubject()
+        // publishSubjectTwo()
+        // replaySubject()
+        replaySubjectTwo()
     }
 
     private fun getLocation() {

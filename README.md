@@ -68,12 +68,22 @@ We can specify a thread to execute any operator by using subscribeOn and/or obse
 ## Cold Observables
 Cold observables are sequences that only emits item upon subscription. Each observer will have its own set of items emitted to them and depending on how the observable was created, will have different instance of emitted items.
 <br>
+<br>
 In reality, data-driven observables are most likely cold. Multiple Observers receive the same datasets by getting separate streams of each item. For those familiar, some real-world examples of cold observables are retrofit and room queries.
 
 ## Hot Obsevables
 In contrast to cold observable, hot observable emit items regardless whether there are observers. In a hot observable, there is a single source of emission and depending on when observer subscribe, they may miss some of those emission.
 <br> 
+<br>
 Hot Observables often represent events rather finite datasets. The events can carry data with them, but there is a time-sensitive component where late observers can miss previously emitted data. UI events or server request for example can be represented as hot Observable.
+<br>
 <br>
 There are many way to implement hot observables. One of them is Subjects.
 
+## ConnectableObservable
+ConnectableObservable takes any Observable (even if it is cold) and makes it hot, so that all emissions are played to all Obaservers at once.<br><br>
+A ConnectableObservable is a single observable source for different observer. The main difference aside from being single observable source is that calling subscribe on a ConnectableObserver will not trigger emission, but connect will.<br><br>
+Using ConnectableObervable allows the set up all Observer beforehand and force each emission to go to all Observer simultaneously (multicasting). This observable behavior of emitting to all obeserver simultaneously is called Multicasting.
+
+## RxJava Subject
+A Subject is a sort of bridge or proxy that is available in some implementations of ReactiveX that acts both as an oberver and as an observable. Because it is an observer, it can subscribe to one or more Observables, and because it is an Observable it can pass through the items it observer by re-emitting them and it can also emit new items.
