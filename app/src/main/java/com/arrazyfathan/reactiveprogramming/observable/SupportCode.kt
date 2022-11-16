@@ -5,6 +5,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.subscribeBy
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import java.io.File
 import java.io.FileNotFoundException
 import kotlin.math.roundToInt
@@ -12,6 +13,8 @@ import kotlin.math.roundToInt
 /**
  * Created by Ar Razy Fathan Rabbani on 15/11/22.
  */
+
+class Student(val score: BehaviorSubject<Int>)
 
 fun main() {
     exampleOf("just") {
