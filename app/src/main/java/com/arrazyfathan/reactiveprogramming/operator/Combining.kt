@@ -196,22 +196,41 @@ fun sampleWithLatestFrom() {
 
 /*
 * reduce
-*
+* reduce produces it summary (accumuated) value only when the source Observable Completes.
+* Applying this operator sequence that never complete wont emit anything.
+* Output : 30
 * */
 fun combiningUsingReduce() {
     exampleOf("reduce") {
         val disposable = CompositeDisposable()
 
-        val source = Observable.just(1,3,5,7,9)
+        val source = Observable.just(1, 3, 5, 7, 9)
         source
-            .reduce(0) {a, b -> a + b }
+            .reduce(5) { a, b -> a + b }
             .subscribeBy(
-                onSuccess = { println(it)}
+                onSuccess = { println(it) }
             )
             .addTo(disposable)
     }
 }
 
+/*
+* Scan
+* Output : 0 -> 1 -> 4 -> 9 -> 16 -> 25
+* */
+fun combiningUsingScan() {
+    exampleOf("Scan") {
+        val disposable = CompositeDisposable()
+        val source = Observable.just(1, 3, 5, 7, 9)
+        source
+            .scan(0) { a, b -> a + b }
+            .subscribeBy {
+                println(it)
+            }
+            .addTo(disposable)
+    }
+}
+
 fun main() {
-    combiningUsingReduce()
+    combiningUsingScan()
 }
